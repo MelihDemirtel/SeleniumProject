@@ -22,7 +22,7 @@ public class TestCase3 {
 		//Wait 15 seconds for the web elements on the page to be found. If it finds the element, it continues without waiting.
 		//Throws an error if it doesn't find the element within 15 seconds
 		
-		// Goes To Amazon Home Page
+		// Goes To BestBuy Home Page
 		driver.get("https://www.bestbuy.com");
 		
 		// Create A List For WebElement
