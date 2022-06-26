@@ -52,7 +52,7 @@ public class TestCase2 {
 			System.out.println("Test Failed");
 		}
 		
-		// Close Driver-
+		// Close Driver
 		driver.close();
 	}
 
