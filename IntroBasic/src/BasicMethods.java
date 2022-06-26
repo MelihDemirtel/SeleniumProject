@@ -15,16 +15,6 @@ public class BasicMethods {
 
 		// Screen Manage
 		driver.manage().window().maximize();
-
-		// GET Main URL
-		driver.get("https://rahulshettyacademy.com");
-		System.out.println("LOG - URL is Opened");
-		System.out.println(driver.getTitle());
-		System.out.println(driver.getCurrentUrl());
-		//driver.close();
-		//driver.quit();
-		
-		Thread.sleep(sleep);
 		
 		driver.get("https://rahulshettyacademy.com/locatorspractice");
 		Thread.sleep(sleep);
@@ -34,7 +24,7 @@ public class BasicMethods {
 		Thread.sleep(sleep);
 		driver.findElement(By.cssSelector("button[type='submit']")).click();
 		Thread.sleep(sleep);
-		
+	
 		
 		
 
