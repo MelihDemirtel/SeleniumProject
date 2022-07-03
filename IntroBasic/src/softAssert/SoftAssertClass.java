@@ -1,6 +1,6 @@
 package softAssert;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.Duration;
 import java.util.List;
@@ -11,12 +11,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-//import org.testng.annotations.Test;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
-public class AssertClass {
+public class SoftAssertClass {
 	
 	@Test
-	public void testAssert() {
+	public void softTestAssert() {
 		//1. Launch browser
 		//2. Navigate to url 'http://automationexercise.com'
 		//3. Verify that home page is visible successfully
@@ -45,9 +46,11 @@ public class AssertClass {
 		// Goes To Amazon Home Page
 		driver.get("http://automationexercise.com");
 		
+		SoftAssert softAssert = new SoftAssert();
+			
 		//3. Verify that home page is visible successfully
 		WebElement homePage = driver.findElement(By.xpath("//img[@alt='Website for automation practice']"));
-		Assert.assertTrue(homePage.isDisplayed());
+		softAssert.assertTrue(homePage.isDisplayed(),"Home Page Test");
 		
 		//4. Click on 'Products' button
 		driver.findElement(By.xpath("//a[@href='/products']")).click();
@@ -55,26 +58,27 @@ public class AssertClass {
 		//5. Verify user is navigated to ALL PRODUCTS page successfully
 		String expectedUrl = "https://automationexercise.com/products";
 		String actualUrl = driver.getCurrentUrl();
-		Assert.assertEquals(expectedUrl, actualUrl);
+		softAssert.assertEquals(expectedUrl, actualUrl, "URL Test");
 		
 		//6. The products list is visible
 		List<WebElement> productList = driver.findElements(By.xpath("//a[contains(text(),'View Product')]"));
-		Assert.assertTrue(productList.size() > 0);
+		softAssert.assertTrue(productList.size() > 0, "All Product Page Test");
 		
 		//7. Click on 'View Product' of first product
 		driver.findElement(By.xpath("(//a[contains(text(),'View Product')])[1]")).click();
 		
 		//8. User is landed to product detail page
 		WebElement detailsPage = driver.findElement(By.xpath("//div[@class='product-information']"));
-		Assert.assertTrue(detailsPage.isDisplayed());
+		softAssert.assertTrue(detailsPage.isDisplayed(), "Details Page Test");
 		
 		//9. Verify that detail detail is visible: product name, category
 		WebElement productName = driver.findElement(By.xpath("//h2[text()='Blue Top']"));
-		Assert.assertTrue(productName.isDisplayed());
+		softAssert.assertTrue(productName.isDisplayed(), "Product Name Test");
 		
 		WebElement categoryName = driver.findElement(By.xpath("//p[text()='Category: Women > Tops']"));
-		Assert.assertTrue(categoryName.isDisplayed());
+		softAssert.assertTrue(categoryName.isDisplayed(), "Category Test");
 		
+		softAssert.assertAll();
 		driver.close();
 	}
 
