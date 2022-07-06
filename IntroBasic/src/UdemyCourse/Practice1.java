@@ -1,14 +1,22 @@
 package UdemyCourse;
 
 import java.time.Duration;
+import java.util.List;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+
 
 public class Practice1 {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
+		String name = "turkcell";
+		String email = "turkcelltest7194@gmail.com";
+		
 		System.setProperty("webdriver.chrome.driver","C:\\Users\\ext02d47194\\Downloads\\chromedriver_win32\\chromedriver.exe");
 		
 		//Create Chrome Driver Object
@@ -22,10 +30,36 @@ public class Practice1 {
 		//Wait 15 seconds for the web elements on the page to be found. If it finds the element, it continues without waiting.
 		//Throws an error if it doesn't find the element within 15 seconds
 		
-		driver.get("https://www.rahulshettyacademy.com");
+		driver.get("https://rahulshettyacademy.com/seleniumPractise/#/");
 		
-		driver.findElement(By.linkText("Practice"))
-		.click();
+		List<WebElement> products = driver.findElements(By.xpath("//h4[@class='product-name']"));
+		
+		System.out.println("Product Size : "+products.size());
+		
+		String expectedTomato = "Tomato - 1 Kg";
+		String expectedStrawberry = "Strawberry - 1/4 Kg";
+		for(int i = 0; i < products.size(); i++) {
+			String actualName = products.get(i).getText();
+			Thread.sleep(150);
+			if(actualName == expectedTomato) {
+				driver.findElement(By.xpath("(//button[text()='ADD TO CART'])"+"["+i+"]")).click();
+				System.out.println("Tomato - 1 Kg is ADDED");
+				String tomatoPrice = driver.findElement(By.xpath("//p[@class='product-price']"+"["+i+"]")).getText();
+			
+			}
+			if(actualName == expectedStrawberry) {
+				driver.findElement(By.xpath("(//button[text()='ADD TO CART'])"+"["+i+"]")).click();
+				System.out.println("Strawberry - 1/4 Kg");
+				String strawberryPrice = driver.findElement(By.xpath("//p[@class='product-price']"+"["+i+"]")).getText();
+				
+			}
+		}
+		
+		
+		String totalAmount = driver.findElement(By.xpath("(//strong[contains(text(),'')])[2]")).getText();
+		
+		Assert.assertEquals("196", totalAmount);
+		
 
 	}
 
