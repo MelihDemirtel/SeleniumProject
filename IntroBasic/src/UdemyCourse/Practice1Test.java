@@ -1,24 +1,29 @@
 package UdemyCourse;
 
+import java.net.SocketException;
 import java.time.Duration;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-
-
-public class Practice1 {
-
-	public static void main(String[] args) throws InterruptedException {
+public class Practice1Test {
+	static WebDriver driver;
+	static List<WebElement> products;
+	static int second = 2000;
 	
+	@BeforeClass
+	public static void setUp(){
 		System.setProperty("webdriver.chrome.driver","C:\\Users\\ext02d47194\\Downloads\\chromedriver_win32\\chromedriver.exe");
 		
 		//Create Chrome Driver Object
-		WebDriver driver = new ChromeDriver();
+		driver = new ChromeDriver();
 
 		// Screen Manage
 		driver.manage().window().maximize();
@@ -29,11 +34,23 @@ public class Practice1 {
 		//Throws an error if it doesn't find the element within 15 seconds
 		
 		driver.get("https://rahulshettyacademy.com/seleniumPractise/#/");
+	}
 		
-		List<WebElement> products = driver.findElements(By.xpath("//h4[@class='product-name']"));
-		
+	@AfterClass
+	public static void tearDown() throws SocketException{
+		driver.close();
+	}
+	
+	@Test
+	public void test01() throws InterruptedException {		
+		products = driver.findElements(By.xpath("//h4[@class='product-name']"));
 		System.out.println("Product Size : "+products.size());
-		
+		Thread.sleep(second);
+		Assert.assertEquals(30, products.size());
+	}
+	@Test
+	public void test02() throws InterruptedException {
+		products = driver.findElements(By.xpath("//h4[@class='product-name']"));
 		String expectedTomato = "Tomato - 1 Kg";
 		for(WebElement product : products) {
 			if(product.getText().equals(expectedTomato)) {
@@ -42,13 +59,13 @@ public class Practice1 {
 				break;
 			}
 		
-		}
-		
-		String totalAmount = driver.findElement(By.xpath("(//strong[contains(text(),'')])[2]")).getText();
-		
-		Assert.assertEquals("16", totalAmount);
-		
-
+		}Thread.sleep(second);
 	}
-
-}
+	@Test
+	public void test03() throws InterruptedException {	
+		String totalAmount = driver.findElement(By.xpath("(//strong[contains(text(),'')])[2]")).getText();
+		Thread.sleep(second);
+		Assert.assertEquals("16", totalAmount);
+	}
+	
+	}

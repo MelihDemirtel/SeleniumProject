@@ -1,22 +1,31 @@
 package UdemyCourse;
 
+import java.net.SocketException;
 import java.time.Duration;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class DropdownsPractice {
-
-	public static void main(String[] args) throws InterruptedException {
+public class DropdownsPracticeTest {
+	static WebDriver driver;
+	static WebElement staticDropdown;
+	static Select dropdown;
+	static int second = 1000;
+	
+	@BeforeClass
+	public static void setUp() {
 		System.setProperty("webdriver.chrome.driver","C:\\Users\\ext02d47194\\Downloads\\chromedriver_win32\\chromedriver.exe");
 		
 		//Create Chrome Driver Object
-		WebDriver driver = new ChromeDriver();
+		driver = new ChromeDriver();
 
 		// Screen Manage
 		driver.manage().window().maximize();
@@ -27,28 +36,58 @@ public class DropdownsPractice {
 		//Throws an error if it doesn't find the element within 15 seconds
 		
 		driver.get("https://rahulshettyacademy.com/dropdownsPractise/");
+	}
+	
+	@AfterClass
+	public static void tearDown() throws SocketException{
+		driver.close();
+	}
+	
+	@Test
+	public void test01() throws InterruptedException {
+		staticDropdown = driver.findElement(By.id("ctl00_mainContent_DropDownListCurrency"));
+		dropdown = new Select(staticDropdown);
 		
-		WebElement staticDropdown = driver.findElement(By.id("ctl00_mainContent_DropDownListCurrency"));
-		
-		Select dropdown = new Select(staticDropdown);
 		dropdown.selectByIndex(3);
 		String selectByIndex = dropdown.getFirstSelectedOption().getText();
 		System.out.println("selectByIndex : "+selectByIndex);
 		
-		Thread.sleep(1000);
+		Assert.assertEquals("USD", selectByIndex);
+		
+		Thread.sleep(second);
+	}
+	
+	@Test
+	public void test02() throws InterruptedException {
+		staticDropdown = driver.findElement(By.id("ctl00_mainContent_DropDownListCurrency"));
+		dropdown = new Select(staticDropdown);
 		
 		dropdown.selectByVisibleText("AED");
 		String selectByVisibleText = dropdown.getFirstSelectedOption().getText();
 		System.out.println("selectByVisibleText : "+selectByVisibleText);
 		
-		Thread.sleep(1000);
+		Assert.assertEquals("AED", selectByVisibleText);
+
+		Thread.sleep(second);
+	}
+	
+	@Test
+	public void test03() throws InterruptedException {
+		staticDropdown = driver.findElement(By.id("ctl00_mainContent_DropDownListCurrency"));
+		dropdown = new Select(staticDropdown);
 		
 		dropdown.selectByValue("INR");
 		String selectByValue = dropdown.getFirstSelectedOption().getText();
 		System.out.println("selectByValue : "+selectByValue);
 		
+		Assert.assertEquals("INR", selectByValue);
+		
+		Thread.sleep(second);
+	}
+	
+	@Test
+	public void test04() throws InterruptedException {
 		driver.findElement(By.id("divpaxinfo")).click();
-		Thread.sleep(1000);
 
 		for(int i = 0; i < 2; i++) {
 			driver.findElement(By.id("hrefIncAdt")).click();
@@ -60,21 +99,38 @@ public class DropdownsPractice {
 		String adultsNumber = driver.findElement(By.id("divpaxinfo")).getText();
 		System.out.println("adultsNumber : "+adultsNumber);
 
-		Thread.sleep(1000);
+		Assert.assertEquals("3 Adult", adultsNumber);
 		
-		driver.findElement(By.id("ctl00_mainContent_ddl_originStation1_CTXT")).click();
-		driver.findElement(By.xpath("//a[@value='MAA']")).click();
-		Thread.sleep(2000);
-
-		driver.findElement(By.xpath("(//a[@text='Delhi (DEL)'])[2]")).click();
-		Thread.sleep(2000);
-		
-		driver.findElement(By.xpath("//a[text()='11']")).click();
-
-		Thread.sleep(1000);
+		Thread.sleep(second);
+	}
 	
-		driver.findElement(By.id("autosuggest")).sendKeys("ind");
-		Thread.sleep(3000);
+	@Test
+	public void test05() throws InterruptedException {
+		driver.findElement(By.id("ctl00_mainContent_ddl_originStation1_CTXT")).click();
+		WebElement from = driver.findElement(By.xpath("//a[@value='MAA']"));
+		Assert.assertTrue(from.isDisplayed());
+		Thread.sleep(second);
+		from.click();
+
+		WebElement to = driver.findElement(By.xpath("(//a[@text='Delhi (DEL)'])[2]"));
+		Assert.assertTrue(to.isDisplayed());
+		Thread.sleep(second);
+		to.click();		
+	}
+	
+	@Test
+	public void test06() throws InterruptedException {
+		WebElement depart = driver.findElement(By.xpath("//a[text()='11']"));
+		Assert.assertTrue(depart.isDisplayed());	
+		Thread.sleep(second);
+		depart.click();		
+	}
+	
+	@Test
+	public void test07() throws InterruptedException {
+		WebElement autosuggest = driver.findElement(By.id("autosuggest"));
+		autosuggest.sendKeys("ind");
+		Thread.sleep(2000);
 		
 		List<WebElement> options = driver.findElements(By.xpath("//li[@class='ui-menu-item']/a"));
 		
@@ -84,14 +140,16 @@ public class DropdownsPractice {
 				break;
 			}
 		}
-		
+	}
+	
+	@Test
+	public void test08() throws InterruptedException {
 		WebElement seniorCitizenDiscount = driver.findElement(By.id("ctl00_mainContent_chk_SeniorCitizenDiscount"));
 		seniorCitizenDiscount.click();
-		Thread.sleep(1000);
+		Thread.sleep(second);
 
 		Assert.assertTrue(seniorCitizenDiscount.isSelected());
-
-				
 	}
+	
 
 }
