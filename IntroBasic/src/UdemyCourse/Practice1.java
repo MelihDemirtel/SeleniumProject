@@ -33,28 +33,25 @@ public class Practice1 {
 		driver.get("https://rahulshettyacademy.com/seleniumPractise/#/");
 		
 		List<WebElement> products = driver.findElements(By.xpath("//h4[@class='product-name']"));
+		List<WebElement> productsPrice = driver.findElements(By.xpath("//p[@class='product-price']"));
 		
 		System.out.println("Product Size : "+products.size());
 		
 		String expectedTomato = "Tomato - 1 Kg";
 		String expectedStrawberry = "Strawberry - 1/4 Kg";
-		for(int i = 0; i < products.size(); i++) {
-			String actualName = products.get(i).getText();
-			Thread.sleep(150);
+		for(WebElement product : products) {
+			String actualName = product.getText();
+			System.out.println(actualName);
+			Thread.sleep(500);
 			if(actualName == expectedTomato) {
-				driver.findElement(By.xpath("(//button[text()='ADD TO CART'])"+"["+i+"]")).click();
+				driver.findElement(By.xpath("(//button[text()='ADD TO CART'])[6]")).click();
 				System.out.println("Tomato - 1 Kg is ADDED");
-				String tomatoPrice = driver.findElement(By.xpath("//p[@class='product-price']"+"["+i+"]")).getText();
-			
 			}
-			if(actualName == expectedStrawberry) {
-				driver.findElement(By.xpath("(//button[text()='ADD TO CART'])"+"["+i+"]")).click();
+			else if(actualName == expectedStrawberry) {
+				driver.findElement(By.xpath("(//button[text()='ADD TO CART'])[24]")).click();
 				System.out.println("Strawberry - 1/4 Kg");
-				String strawberryPrice = driver.findElement(By.xpath("//p[@class='product-price']"+"["+i+"]")).getText();
-				
 			}
 		}
-		
 		
 		String totalAmount = driver.findElement(By.xpath("(//strong[contains(text(),'')])[2]")).getText();
 		
