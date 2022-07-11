@@ -111,11 +111,21 @@ public class DropdownsPracticeTest {
 		Assert.assertTrue(from.isDisplayed());
 		Thread.sleep(second);
 		from.click();
+		Thread.sleep(second);
+
+		WebElement departFrom = driver.findElement(By.id("ctl00_mainContent_ddl_originStation1_CTXT"));
+		System.out.println("departFrom : "+departFrom.getAttribute("value"));
+		Assert.assertTrue(departFrom.getAttribute("value").contains("Chennai (MAA)"));
 
 		WebElement to = driver.findElement(By.xpath("(//a[@text='Delhi (DEL)'])[2]"));
 		Assert.assertTrue(to.isDisplayed());
 		Thread.sleep(second);
 		to.click();		
+		Thread.sleep(second);
+
+		WebElement returnTo = driver.findElement(By.id("ctl00_mainContent_ddl_destinationStation1_CTXT"));
+		System.out.println("returnTo : "+returnTo.getAttribute("value"));
+		Assert.assertTrue(returnTo.getAttribute("value").contains("Delhi (DEL)"));
 	}
 	
 	@Test
@@ -149,6 +159,13 @@ public class DropdownsPracticeTest {
 		Thread.sleep(second);
 
 		Assert.assertTrue(seniorCitizenDiscount.isSelected());
+	}
+	
+	@Test
+	public void test09() throws InterruptedException {
+		driver.findElement(By.id("ctl00_mainContent_btn_FindFlights")).click();
+		Thread.sleep(2000);
+
 	}
 	
 

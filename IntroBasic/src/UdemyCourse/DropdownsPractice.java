@@ -90,6 +90,9 @@ public class DropdownsPractice {
 		Thread.sleep(1000);
 
 		Assert.assertTrue(seniorCitizenDiscount.isSelected());
+		
+		driver.findElement(By.id("ctl00_mainContent_btn_FindFlights")).click();
+		
 
 				
 	}
