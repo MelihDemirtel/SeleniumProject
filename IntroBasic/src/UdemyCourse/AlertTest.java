@@ -49,37 +49,33 @@ public class AlertTest {
 		Thread.sleep(second);
 
 		WebElement alertbtn = driver.findElement(By.id("alertbtn"));
+		Assert.assertTrue(alertbtn.isDisplayed());
 		alertbtn.click();
 		Thread.sleep(second);
 		
-		Assert.assertTrue(alertbtn.isDisplayed());
-	}
-	
-	@Test
-	public void test02() throws InterruptedException {
 		String expectedAlertMessage = "Hello "+userName+", share this practice page and share your knowledge";
 		String alertMessage = driver.switchTo().alert().getText();
-		System.out.println("alertMessage : " + alertMessage);
+		System.out.println("alertMessage : " +alertMessage);
+		
 		Assert.assertEquals(expectedAlertMessage, alertMessage);
+		
 		driver.switchTo().alert().accept();
 		Thread.sleep(second);
 	}
 	
 	@Test
-	public void test03() throws InterruptedException {
+	public void test02() throws InterruptedException {
 		WebElement confirmbtn = driver.findElement(By.id("confirmbtn"));
+		Assert.assertTrue(confirmbtn.isDisplayed());
 		confirmbtn.click();
 		Thread.sleep(second);
 		
-		Assert.assertTrue(confirmbtn.isDisplayed());
-	}
-	
-	@Test
-	public void test04() throws InterruptedException {
 		String expectedAlertMessage2 = "Hello , Are you sure you want to confirm?";
 		String alertMessage2 = driver.switchTo().alert().getText();
-		System.out.println("alertMessage2 : " + alertMessage2);
+		System.out.println("alertMessage2 : " +alertMessage2);
+	
 		Assert.assertEquals(expectedAlertMessage2, alertMessage2);
+		
 		driver.switchTo().alert().dismiss();
 		Thread.sleep(second);
 	
