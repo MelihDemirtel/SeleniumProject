@@ -1,7 +1,10 @@
 package UdemyCourse;
 
 import java.time.Duration;
+import java.util.Iterator;
+import java.util.Set;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -24,7 +27,19 @@ public class WindowHandles {
 		// element, it continues without waiting.
 		// Throws an error if it doesn't find the element within 15 seconds
 
-		driver.get("https://www.amazon.com/");
+		driver.get("https://rahulshettyacademy.com/loginpagePractise/#");
+		
+		driver.findElement(By.className("blinkingText")).click();
+		
+		Set<String> windows = driver.getWindowHandles();
+		
+		Iterator<String> it = windows.iterator();
+		
+		String parentId = it.next();
+		String childId = it.next();
+		
+		driver.switchTo().window(childId);
+		System.out.println(driver.findElement(By.className(".im-para.red")).getText());
 
 	}
 
