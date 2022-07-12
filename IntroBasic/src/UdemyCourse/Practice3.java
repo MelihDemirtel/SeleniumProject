@@ -2,8 +2,11 @@ package UdemyCourse;
 
 import java.time.Duration;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
 public class Practice3 {
 
@@ -24,6 +27,18 @@ public class Practice3 {
 		// Throws an error if it doesn't find the element within 15 seconds
 
 		driver.get("https://the-internet.herokuapp.com/");
+		
+		driver.findElement(By.linkText("Frames")).click();
+		
+		driver.findElement(By.linkText("Nested Frames")).click();
+		
+		driver.switchTo().frame(driver.findElement(By.xpath("//frame[@name='frame-top']")));
+		
+		driver.switchTo().frame(driver.findElement(By.xpath("//frame[@name='frame-middle']")));
+		
+		String text = driver.findElement(By.id("content")).getText();
+			
+		System.out.println("Middle Frame Text : "+text);
 
 	}
 
