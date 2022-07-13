@@ -44,6 +44,8 @@ public class Locators {
 		// XPATH
 		driver.findElement(By.xpath("XPATH--> //tagName[@attribute='attribute value']"));
 		driver.findElement(By.xpath("XPATH--> //tagName[@attribute='attribute value'][index value]"));
+		driver.findElement(By.xpath("XPATH--> //tagName[text()='any text']"));
+		driver.findElement(By.xpath("XPATH--> //tagName[contains(text(),'any text part')]"));
 		
 		// CSS SELECTOR
 		driver.findElement(By.cssSelector("CSS SELECTOR--> tagname[attribute='attribute value']"));
