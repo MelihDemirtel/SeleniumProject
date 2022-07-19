@@ -9,11 +9,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import org.junit.Assert;
+public class Practice4 {
 
-public class Scrolling {
 	public static void main(String[] args) throws InterruptedException {
-		int second = 1000;
+		int second = 2000;
 		System.setProperty("webdriver.chrome.driver",
 				"C:\\Users\\ext02d47194\\Downloads\\chromedriver_win32\\chromedriver.exe");
 
@@ -29,27 +28,32 @@ public class Scrolling {
 		// element, it continues without waiting.
 		// Throws an error if it doesn't find the element within 15 seconds
 
-		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
-
+		driver.get("https://qaclickacademy.com");
+		Thread.sleep(second);
+		
+		driver.findElement(By.xpath("//button[text()='NO THANKS']")).click();
+		Thread.sleep(second);
+		
+		driver.findElement(By.xpath("//a[text()='Practice']")).click();
+		Thread.sleep(second);
+		
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-
-		js.executeScript("window.scrollBy(0,500)");
-		Thread.sleep(3000);
-		js.executeScript("document.querySelector('.tableFixHead').scrollTop=500");
-
-		List<WebElement> values = driver.findElements(By.cssSelector(".tableFixHead td:nth-child(4)"));
-
-		int sum = 0;
 		
-		for (int i = 0; i < values.size(); i++) 
-		{
-			sum = sum + Integer.parseInt(values.get(i).getText());
-		}
-		System.out.println(sum);
+		js.executeScript("window.scrollBy(0,600)");
+		Thread.sleep(second);
+
+		List<WebElement> rows = driver.findElements(By.cssSelector(".table-display tr"));
 		
-		driver.findElement(By.cssSelector(".totalAmount")).getText();
-		int total = Integer.parseInt(driver.findElement(By.cssSelector(".totalAmount")).getText().split(":")[1].trim());
-					
-		Assert.assertEquals(sum, total);
+		System.out.println("Number of Rows : "+rows.size());
+		
+		List<WebElement> columns = driver.findElements(By.cssSelector(".table-display th"));
+		
+		System.out.println("Number of Columns : "+columns.size());
+		
+		String secondRow = driver.findElement(By.cssSelector(".table-display tr:nth-child(3)")).getText();
+		
+		System.out.println("Values of SecondRow : "+secondRow);
+
 	}
+
 }
