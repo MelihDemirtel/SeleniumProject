@@ -2,6 +2,7 @@ package UdemyCourse;
 
 import java.time.Duration;
 
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,8 +12,16 @@ public class SSLCheck {
 	public static void main(String[] args) throws InterruptedException {
 		int second = 500;
 		
+		//Using the ChromeOptions class
 		ChromeOptions options = new ChromeOptions();
+		//Using the ChromeOptions class
+		Proxy proxy = new Proxy();
+		//Using the ChromeOptions class
+		proxy.setHttpProxy("ipaddress:4444");
+		//Using the ChromeOptions class
+		options.setCapability("proxy", proxy);
 		
+		//By Pass SSL Certificates
 		options.setAcceptInsecureCerts(true);
 		
 		System.setProperty("webdriver.chrome.driver",
