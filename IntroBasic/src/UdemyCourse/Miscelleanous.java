@@ -1,13 +1,19 @@
 package UdemyCourse;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import org.apache.commons.io.FileUtils;
+
 public class Miscelleanous {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		System.setProperty("webdriver.chrome.driver",
 				"C:\\Users\\ext02d47194\\Downloads\\chromedriver_win32\\chromedriver.exe");
 
@@ -30,6 +36,9 @@ public class Miscelleanous {
 
 		driver.get("https://google.com");
 		
+		// Screen Shot
+		File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(src, new File("C:\\Users\\ext02d47194\\screenshot.png"));
 
 	}
 
