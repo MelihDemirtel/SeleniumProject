@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,14 +29,19 @@ public class BrokenLinks {
 		
 		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
 		
-		String url = driver.findElement(By.cssSelector("a[href*='soapui']")).getAttribute("href");//a[href*='brokenlink']
+		String url = driver.findElement(By.cssSelector("a[href*='brokenlink']")).getAttribute("href");// a[href*='brokenlink'] // a[href*='soapui']
 		
 		HttpURLConnection conn = (HttpURLConnection)new URL(url).openConnection();
 		
 		conn.setRequestMethod("HEAD");
 		conn.connect();
 		int responseCode = conn.getResponseCode();
-		System.out.println(responseCode);
+		System.out.println("Code : "+responseCode);
+		if(responseCode > 400)
+		{
+			System.out.println("Broken Link : "+url);
+			Assert.assertTrue(false);
+		}
 		
 	}
 
